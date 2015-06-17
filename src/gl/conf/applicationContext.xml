@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">				
+    
+    <bean id="mymonitor" class="gl.monitor.MyMonitor" >
+        <property name="context">  
+            <ref bean="context" />  
+        </property>                              			
+    </bean>           
+    
+    <bean id="context" class="gl.global.Context" >   	                   
+        <!-- <property name="zNode" value="/znode" /> 
+        <property name="errorNode" value="/errornode" /> 
+        <property name="zPersisNode" value="/zpnode" /> 
+        <property name="confNode" value="/conf" />
+        <property name="dataNode" value="/datanode" />
+        <property name="signDataNode" value="/signdatanode" />
+        <property name="runNameNode" value="/runnamenode" />
+        <property name="signRunNode" value="/signrunnode" /> -->
+        <property name="myzk">  
+            <ref bean="myzk" />  
+        </property>
+        <property name="reTryNum" value="10" />
+    	<property name="sleeptime" value="500" /> 
+        <property name="mapNameNode" >
+        	<map>
+        		<entry key="zNode">
+        			<bean class="gl.global.MyNode">
+        				<property name="NodeName" value="/znode" />
+        				<property name="mustExists" value="true" />
+						<property name="masterNeedcheckChildren" value="true" />
+						<property name="masterChildrenMustNull" value="true" />
+						<property name="masterNeedListenChildren" value="true" />
+						<property name="masterNeedListenNode" value="false" />
+						<property name="NodeMode" value="0" /><!-- 0:CreateMode.PERSISTENT 1:CreateMode.EPHEMERAL 2:PERSISTENT_SEQUENTIAL 3:EPHEMERAL_SEQUENTIAL --> 
+						<property name="childrenMode" value="1" />
+						<property name="clientNeedListenNode" value="false" />
+        			</bean>
+        		</entry>
+        		<entry key="zPersisNode">
+        			<bean class="gl.global.MyNode">
+        				<property name="NodeName" value="/zpnode" />
+        				<property name="mustExists" value="true" />
+						<property name="masterNeedcheckChildren" value="false" />
+						<property name="masterChildrenMustNull" value="false" />
+						<property name="masterNeedListenChildren" value="false" />
+						<property name="masterNeedListenNode" value="false" />
+						<property name="NodeMode" value="0" /><!-- 0:CreateMode.PERSISTENT 1:CreateMode.EPHEMERAL 2:PERSISTENT_SEQUENTIAL 3:EPHEMERAL_SEQUENTIAL --> 
+						<property name="childrenMode" value="0" />
+						<property name="clientNeedListenNode" value="false" />
+        			</bean>
+        		</entry>
+        		<entry key="errorNode">
+        			<bean class="gl.global.MyNode">
+        				<property name="NodeName" value="/errornode" />
+        				<property name="mustExists" value="true" />
+						<property name="masterNeedcheckChildren" value="true" />
+						<property name="masterChildrenMustNull" value="true" />
+						<property name="masterNeedListenChildren" value="true" />
+						<property name="masterNeedListenNode" value="false" />
+						<property name="NodeMode" value="0" /><!-- 0:CreateMode.PERSISTENT 1:CreateMode.EPHEMERAL 2:PERSISTENT_SEQUENTIAL 3:EPHEMERAL_SEQUENTIAL --> 
+						<property name="childrenMode" value="0" />
+						<property name="clientNeedListenNode" value="false" />
+        			</bean>
+        		</entry>
+        		<entry key="confNode">
+        			<bean class="gl.global.MyNode">
+        				<property name="NodeName" value="/conf" />
+        				<property name="mustExists" value="true" />
+						<property name="masterNeedcheckChildren" value="false" />
+						<property name="masterChildrenMustNull" value="false" />
+						<property name="masterNeedListenChildren" value="false" />
+						<property name="masterNeedListenNode" value="false" />
+						<property name="NodeMode" value="0" /><!-- 0:CreateMode.PERSISTENT 1:CreateMode.EPHEMERAL 2:PERSISTENT_SEQUENTIAL 3:EPHEMERAL_SEQUENTIAL --> 
+						<property name="childrenMode" value="0" />
+						<property name="clientNeedListenNode" value="false" />
+        			</bean>
+        		</entry>
+        		<entry key="dataNode">
+        			<bean class="gl.global.MyNode">
+        				<property name="NodeName" value="/datanode" />
+        				<property name="mustExists" value="true" />
+						<property name="masterNeedcheckChildren" value="false" />
+						<property name="masterChildrenMustNull" value="false" />
+						<property name="masterNeedListenChildren" value="false" />
+						<property name="masterNeedListenNode" value="false" />
+						<property name="NodeMode" value="0" /><!-- 0:CreateMode.PERSISTENT 1:CreateMode.EPHEMERAL 2:PERSISTENT_SEQUENTIAL 3:EPHEMERAL_SEQUENTIAL --> 
+						<property name="childrenMode" value="0" />
+						<property name="clientNeedListenNode" value="false" />
+        			</bean>
+        		</entry>
+        		<entry key="signDataNode">
+        			<bean class="gl.global.MyNode">
+        				<property name="NodeName" value="/signdatanode" />
+        				<property name="mustExists" value="true" />
+						<property name="masterNeedcheckChildren" value="false" />
+						<property name="masterChildrenMustNull" value="false" />
+						<property name="masterNeedListenChildren" value="false" />
+						<property name="masterNeedListenNode" value="false" />
+						<property name="NodeMode" value="0" /><!-- 0:CreateMode.PERSISTENT 1:CreateMode.EPHEMERAL 2:PERSISTENT_SEQUENTIAL 3:EPHEMERAL_SEQUENTIAL --> 
+						<property name="childrenMode" value="0" />
+						<property name="clientNeedListenNode" value="true" />
+        			</bean>
+        		</entry>
+        		<entry key="runNameNode">
+        			<bean class="gl.global.MyNode">
+        				<property name="NodeName" value="/runnamenode" />
+        				<property name="mustExists" value="true" />
+						<property name="masterNeedcheckChildren" value="false" />
+						<property name="masterChildrenMustNull" value="false" />
+						<property name="masterNeedListenChildren" value="false" />
+						<property name="masterNeedListenNode" value="false" />
+						<property name="NodeMode" value="0" /><!-- 0:CreateMode.PERSISTENT 1:CreateMode.EPHEMERAL 2:PERSISTENT_SEQUENTIAL 3:EPHEMERAL_SEQUENTIAL --> 
+						<property name="childrenMode" value="0" />
+						<property name="clientNeedListenNode" value="false" />
+        			</bean>
+        		</entry>
+        		<entry key="signRunNode">
+        			<bean class="gl.global.MyNode">
+        				<property name="NodeName" value="/signrunnode" />
+        				<property name="mustExists" value="true" />
+						<property name="masterNeedcheckChildren" value="false" />
+						<property name="masterChildrenMustNull" value="false" />
+						<property name="masterNeedListenChildren" value="false" />
+						<property name="masterNeedListenNode" value="false" />
+						<property name="NodeMode" value="0" /><!-- 0:CreateMode.PERSISTENT 1:CreateMode.EPHEMERAL 2:PERSISTENT_SEQUENTIAL 3:EPHEMERAL_SEQUENTIAL --> 
+						<property name="childrenMode" value="0" />
+						<property name="clientNeedListenNode" value="true" />
+        			</bean>
+        		</entry>
+        		<entry key="hostConfNode">
+        			<bean class="gl.global.MyNode">
+        				<property name="NodeName" value="/hostconfnode" />
+        				<property name="mustExists" value="true" />
+						<property name="masterNeedcheckChildren" value="false" />
+						<property name="masterChildrenMustNull" value="false" />
+						<property name="masterNeedListenChildren" value="false" />
+						<property name="masterNeedListenNode" value="false" />
+						<property name="NodeMode" value="0" /><!-- 0:CreateMode.PERSISTENT 1:CreateMode.EPHEMERAL 2:PERSISTENT_SEQUENTIAL 3:EPHEMERAL_SEQUENTIAL --> 
+						<property name="childrenMode" value="0" />
+						<property name="clientNeedListenNode" value="true" />
+        			</bean>
+        		</entry>
+        		<entry key="newNode">
+        			<bean class="gl.global.MyNode">
+        				<property name="NodeName" value="/newnode" />
+        				<property name="mustExists" value="true" />
+						<property name="masterNeedcheckChildren" value="true" />
+						<property name="masterChildrenMustNull" value="true" />
+						<property name="masterNeedListenChildren" value="false" />
+						<property name="masterNeedListenNode" value="false" />
+						<property name="NodeMode" value="0" /><!-- 0:CreateMode.PERSISTENT 1:CreateMode.EPHEMERAL 2:PERSISTENT_SEQUENTIAL 3:EPHEMERAL_SEQUENTIAL --> 
+						<property name="childrenMode" value="0" />
+						<property name="clientNeedListenNode" value="false" />
+        			</bean>
+        		</entry>
+        		<entry key="LogNode"><!-- log root -->
+        			<bean class="gl.global.MyNode">
+        				<property name="NodeName" value="/lognode" />
+        				<property name="mustExists" value="true" />
+						<property name="masterNeedcheckChildren" value="false" />
+						<property name="masterChildrenMustNull" value="false" />
+						<property name="masterNeedListenChildren" value="false" />
+						<property name="masterNeedListenNode" value="false" />
+						<property name="NodeMode" value="0" /><!-- 0:CreateMode.PERSISTENT 1:CreateMode.EPHEMERAL 2:PERSISTENT_SEQUENTIAL 3:EPHEMERAL_SEQUENTIAL --> 
+						<property name="childrenMode" value="0" />
+						<property name="clientNeedListenNode" value="false" />
+        			</bean>
+        		</entry>
+        		<entry key="runLogNode"><!-- run log -->
+        			<bean class="gl.global.MyNode">
+        				<property name="NodeName" value="/lognode/runlog" />
+        				<property name="mustExists" value="true" />
+						<property name="masterNeedcheckChildren" value="true" />
+						<property name="masterChildrenMustNull" value="true" />
+						<property name="masterNeedListenChildren" value="false" />
+						<property name="masterNeedListenNode" value="false" />
+						<property name="NodeMode" value="0" /><!-- 0:CreateMode.PERSISTENT 1:CreateMode.EPHEMERAL 2:PERSISTENT_SEQUENTIAL 3:EPHEMERAL_SEQUENTIAL --> 
+						<property name="childrenMode" value="0" />
+						<property name="clientNeedListenNode" value="false" />
+        			</bean>
+        		</entry>
+        	</map>        
+        </property>                                 			
+    </bean>  
+    
+    <bean id="myzk" class="gl.zk.MyZK" >
+    	<property name="hostPort" value="59.151.111.57:2181" />
+    	                                                           			
+    </bean> 
+    
+    <bean id="mail" class="gl.mail.Mail">  
+        <property name="SMTPHost" value="mail.joyogame.com" />  
+        <property name="MailLang" value="gbk" />
+        <property name="SendUserMail" value="leiguo@joyogame.com" />
+        <property name="SendUserName" value="leiguo" />
+        <property name="SendUserPass" value="Guolei5tgb8ik," />
+        <property name="toMail">
+  			<list>
+   				<value>shuju@joyogame.com</value> 				
+  			</list>
+  		</property>                            
+    </bean>
+
+	
+</beans>
